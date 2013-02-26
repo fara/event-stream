@@ -1,4 +1,4 @@
-STREAMING_URL = 'https://stream.twitter.com/1/statuses/sample.json'
+STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json'#'https://stream.twitter.com/1/statuses/sample.json'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
 
@@ -21,8 +21,8 @@ get '/' do
 end
 
 EM.schedule do
-  http = EM::HttpRequest.new(STREAMING_URL).get :head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }
-  buffer = ""
+  http = EM::HttpRequest.new(STREAMING_URL).post :head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }
+  buffer = "track=twitter" #{}""
   http.stream do |chunk|
     buffer += chunk
     while line = buffer.slice!(/.+\r?\n/)
