@@ -5,6 +5,6 @@ require 'sinatra'
 require 'em-http'
 require 'json'
 require 'mongo'
-require 'app'
+require './app'
 
 run Sinatra::Application
