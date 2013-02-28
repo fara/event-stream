@@ -27,7 +27,7 @@ EM.schedule do
   http.stream do |chunk|
     buffer += chunk
     while line = buffer.slice!(/.+\r?\n/)
-      print line
+      logger.info line
       tweet = JSON.parse(line)
       DB['tweets'].insert(tweet) if tweet['text']
     end
