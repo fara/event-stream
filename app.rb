@@ -2,7 +2,7 @@ logger = Logger.new(STDOUT)
 logger.level = Logger::WARN
 
 #STREAMING_URL = 'https://stream.twitter.com/1/statuses/sample.json'
-STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json?track=barcelona'
+STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json?track=claudioubeda'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
 
