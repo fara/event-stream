@@ -1,4 +1,5 @@
-STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json?track=%23CESSI'#'https://stream.twitter.com/1/statuses/sample.json'
+#STREAMING_URL = 'https://stream.twitter.com/1/statuses/sample.json'
+STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json?track=cardgloo'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
 
@@ -26,6 +27,7 @@ EM.schedule do
   http.stream do |chunk|
     buffer += chunk
     while line = buffer.slice!(/.+\r?\n/)
+      print line
       tweet = JSON.parse(line)
       DB['tweets'].insert(tweet) if tweet['text']
     end
