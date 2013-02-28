@@ -35,8 +35,12 @@ EM.schedule do
     buffer += chunk
     while line = buffer.slice!(/.+\r?\n/)
       logger.info line
-      tweet = JSON.parse(line)
-      DB['tweets'].insert(tweet) if tweet['text']
+      begin
+        tweet = JSON.parse(line)
+        DB['tweets'].insert(tweet) if tweet['text']
+      rescue JSON::ParserError => e
+        logger.error line
+      end
     end
   end
 end
