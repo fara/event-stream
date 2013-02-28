@@ -5,6 +5,7 @@ logger.level = Logger::WARN
 STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
+TRACK_WORD = "instagram"#"NYTvoyage"
 
 configure do
   if ENV['MONGOHQ_URL']
@@ -12,7 +13,7 @@ configure do
     conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
     DB = conn.db(uri.path.gsub(/^\//, ''))
   else
-    DB = Mongo::Connection.new.db("mongo-twitter-streaming")
+    DB = Mongo::Connection.new.db("event-stream")
   end
   
   DB.create_collection("tweets", :capped => true, :size => 10485760)
@@ -20,15 +21,20 @@ end
 
 get '/' do
   content_type 'text/html', :charset => 'utf-8'
-  @tweets = DB['tweets'].find({}, :limit => 10, :sort => [[ '$natural', :desc ]])
   erb :index
+end
+
+get '/search' do
+  @tweets = DB['tweets'].find({}, :limit => 10, :sort => [[ '$natural', :desc ]])
+  content_type :json
+  @tweets.to_a.to_json
 end
 
 EM.schedule do
   http = EM::HttpRequest.new(
-  STREAMING_URL,
-  :connection_timeout => 0,
-  :inactivity_timeout => 0).post(:head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }, :body => {:track => "claudioubeda"})
+    STREAMING_URL,
+    :connection_timeout => 0,
+    :inactivity_timeout => 0).post(:head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }, :body => {:track => TRACK_WORD})
    
   buffer = ""
   http.stream do |chunk|

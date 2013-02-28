@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>
+			Super Silly Twitter App
+		</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+		<style>
+		#tweets {
+			width: 973px;
+			float: left;
+			height: 73px;
+		}
+		.prof {
+			float: left;
+			width: 73;
+		}
+		#tweets p {
+			float: left;
+			width: 900px;
+			height: 73px;
+		}
+		.pic {
+			width: 300px;
+			float: left;
+		}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+		function printTweets(search) {
+			//$.each(data.items, function(i,item){
+			//$("<img/>").attr("src", item.media.m).appendTo("#images");
+
+			for(var i = 0;i<search.results.length;i++) {
+				var tweet = search.results[i];
+				var profile_img = tweet.profile_image_url.replace('normal', 'bigger');
+				$("<img/>").addClass('prof').attr("src", profile_img).appendTo("#tweets");
+				var photo_url = '';
+				if (tweet.entities.media && tweet.entities.media.length > 0) {
+					photo_url = tweet.entities.media[0].media_url;
+				} else if (tweet.entities.urls.length > 0) { // check others
+					if (tweet.entities.urls[0].expanded_url.contains('instagr')) {
+					  photo_url = tweet.entities.urls[0].expanded_url + 'media/?size=l';
+					}
+				}
+				if (photo_url != '')
+					$('<img/>').addClass('pic').attr("src", photo_url).appendTo("#tweets");
+				$("<p/>").html(tweet.from_user + ': ' + tweet.text).appendTo("#tweets");
+				//document.write(tweet.from_user+': '+tweet.text+'<br>')
+			}
+		}
+		function fetchTweets() {
+			$.getJSON("http://search.twitter.com/search.json?callback=?",
+				{
+				q: "#claudioubeda",
+				include_entities: 1,
+				result_type: "recent"
+				}, printTweets
+			);
+		}
+		setInterval(fetchTweets, 2 * 1000);
+		</script>
+		<div id="tweets"></div>
+	</body>
+</html>
