@@ -2,7 +2,7 @@ logger = Logger.new(STDOUT)
 logger.level = Logger::WARN
 
 #STREAMING_URL = 'https://stream.twitter.com/1/statuses/sample.json'
-STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json?track=claudioubeda'
+STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
 
@@ -25,7 +25,11 @@ get '/' do
 end
 
 EM.schedule do
-  http = EM::HttpRequest.new(STREAMING_URL).get :head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }
+  http = EM::HttpRequest.new(
+  STREAMING_URL,
+  :connection_timeout => 0,
+  :inactivity_timeout => 0).post(:head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }, :body => {:track => "claudioubeda"})
+   
   buffer = ""
   http.stream do |chunk|
     buffer += chunk
