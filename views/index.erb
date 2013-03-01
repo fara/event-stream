@@ -1,40 +1,16 @@
 <html>
 	<head>
-		<title>
-			Super Silly Twitter App
-		</title>
+		<title>Event Stream</title>
+		<link rel="stylesheet" href="/event-stream.css" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-		<style>
-		.tweet {
-			float: left;
-			width: 100%;
-		}
-		#tweets {
-			width: 973px;
-			float: left;
-			height: 73px;
-		}
-		.prof {
-			float: left;
-			width: 73;
-		}
-		#tweets p {
-			float: left;
-			width: 900px;
-			height: 73px;
-		}
-		.pic {
-			width: 300px;
-			float: left;
-		}
-		</style>
+		<script src="/slides.min.jquery.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
 		var USE_SEARCH_API = false;
 
-		function printTweet(avatar, photo_url, from_user, text) {
-			var div = $("<div/>").addClass('tweet').appendTo("#tweets");
+		function printTweet(avatar, photo_url, from_user, text) {			
+			var div = $("<div/>").appendTo(".slides_container");
 			$("<img/>").addClass('prof').attr("src", avatar).appendTo(div);
 			if (photo_url != '')
 				$('<img/>').addClass('pic').attr("src", photo_url).appendTo(div);
@@ -59,6 +35,7 @@
 				var photo_url = getPhotoUrl(tweet.entities);
 				printTweet(profile_img, photo_url, tweet.from_user, tweet.text);
 			});
+			$('#tweets').slides();
 		}
 
 		function parseStream(data) {
@@ -68,13 +45,15 @@
 				var photo_url = getPhotoUrl(tweet.entities);
 				printTweet(profile_img, photo_url, tweet.user.name, tweet.text);
 			});
+			$('#tweets').slides({play: 2000, pagination: false});
 		}
 
 		function fetchTweets() {
+			$('.slides_container').empty();
 			if (USE_SEARCH_API) {
 				$.getJSON("http://search.twitter.com/search.json?callback=?",
 					{
-					q: "#barcelona",
+					q: "#NYTvoyage",
 					include_entities: 1,
 					result_type: "recent"
 					}, parseSearch
@@ -83,8 +62,11 @@
 				$.getJSON("http://localhost:9292/search", parseStream);
 			}
 		}
-		setInterval(fetchTweets, 2 * 1000);
+		fetchTweets();
+		setInterval(fetchTweets, 10 * 1000);
 		</script>
-		<div id="tweets"></div>
+		<div id="tweets">
+			<div class="slides_container"></div>
+		</div>
 	</body>
 </html>

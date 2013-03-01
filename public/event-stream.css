@@ -1,0 +1,39 @@
+body {
+	background-image: url('/background.png');
+}
+.tweet {
+	float: left;
+	width: 100%;
+}
+#tweets {
+	width: 973px;
+	float: left;
+	height: 73px;
+}
+.prof {
+	float: left;
+	width: 73;
+}
+#tweets p {
+	float: left;
+	width: 900px;
+	height: 73px;
+}
+.pic {
+	width: 300px;
+	float: left;
+}
+
+
+.slides_container {
+    width:570px;
+    height:270px;
+}
+.slides_container div {
+    width:570px;
+    height:270px;
+    display:block;
+}
+.pagination {
+	display: none;
+}

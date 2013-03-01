@@ -5,7 +5,7 @@ logger.level = Logger::WARN
 STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json'
 TWITTER_USERNAME = ENV['TWITTER_USERNAME']
 TWITTER_PASSWORD = ENV['TWITTER_PASSWORD']
-TRACK_WORD = "NYTvoyage"
+TRACK_WORD = "paisaje"
 
 configure do
   if ENV['MONGOHQ_URL']
@@ -19,13 +19,15 @@ configure do
   DB.create_collection("tweets", :capped => true, :size => 10485760)
 end
 
+set :public_folder, 'public'
+
 get '/' do
   content_type 'text/html', :charset => 'utf-8'
   erb :index
 end
 
 get '/search' do
-  @tweets = DB['tweets'].find({}, :limit => 10, :sort => [[ '$natural', :desc ]])
+  @tweets = DB['tweets'].find({}, :limit => 10, :sort => [[ 'id_str', :desc ]])
   content_type :json
   @tweets.to_a.to_json
 end
@@ -34,7 +36,9 @@ EM.schedule do
   http = EM::HttpRequest.new(
     STREAMING_URL,
     :connection_timeout => 0,
-    :inactivity_timeout => 0).post(:head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }, :body => {:track => TRACK_WORD})
+    :inactivity_timeout => 0).post(
+      :head => { 'Authorization' => [ TWITTER_USERNAME, TWITTER_PASSWORD ] }, 
+      :body => {:track => TRACK_WORD})
    
   buffer = ""
   http.stream do |chunk|
