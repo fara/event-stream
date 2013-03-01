@@ -58,8 +58,9 @@
 					result_type: "recent"
 					}, parseSearch
 				);
-			} else {
-				$.getJSON("http://localhost:9292/search", parseStream);
+			} else {				
+				$.getJSON("http://event-stream.herokuapp.com/search", parseStream);
+				//$.getJSON("http://localhost:9292/search", parseStream);
 			}
 		}
 		fetchTweets();
