@@ -11,10 +11,11 @@
 
 		function printTweet(avatar, photo_url, from_user, text) {			
 			var div = $("<div/>").appendTo(".slides_container");
-			$("<img/>").addClass('prof').attr("src", avatar).appendTo(div);
+			//$("<img/>").addClass('prof').attr("src", avatar).appendTo(div);			
+			$("<h1/>").html(from_user).appendTo(div);		
+			$("<p/>").html(text).appendTo(div);		
 			if (photo_url != '')
 				$('<img/>').addClass('pic').attr("src", photo_url).appendTo(div);
-			$("<p/>").html(from_user + ': ' + text).appendTo(div);		
 		}
 		function getPhotoUrl(entities) {
 			var photo_url = '';
@@ -45,7 +46,7 @@
 				var photo_url = getPhotoUrl(tweet.entities);
 				printTweet(profile_img, photo_url, tweet.user.name, tweet.text);
 			});
-			$('#tweets').slides({play: 2000, pagination: false});
+			$('#tweets').slides({play: 5000, pagination: false});
 		}
 
 		function fetchTweets() {
@@ -53,21 +54,22 @@
 			if (USE_SEARCH_API) {
 				$.getJSON("http://search.twitter.com/search.json?callback=?",
 					{
-					q: "#NYTvoyage",
+					q: "#claudioubeda",
 					include_entities: 1,
 					result_type: "recent"
 					}, parseSearch
 				);
 			} else {				
-				$.getJSON("http://event-stream.herokuapp.com/search", parseStream);
-				//$.getJSON("http://localhost:9292/search", parseStream);
+				//$.getJSON("http://event-stream.herokuapp.com/search", parseStream);
+				$.getJSON("http://localhost:9292/search", parseStream);
 			}
 		}
 		fetchTweets();
-		setInterval(fetchTweets, 10 * 1000);
+		setInterval(fetchTweets, 20 * 1000);
 		</script>
 		<div id="tweets">
 			<div class="slides_container"></div>
+			<div id="clear" style="clear:both;"></div>
 		</div>
 	</body>
 </html>

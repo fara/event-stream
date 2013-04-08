@@ -1,14 +1,25 @@
+@font-face
+{
+	font-family: Sansumi-Regular;
+	src: url(Sansumi-Regular.ttf);
+}
+
 body {
 	background-image: url('/background.png');
 }
 .tweet {
 	float: left;
 	width: 100%;
+	
+	color: #a10c10;
 }
 #tweets {
-	width: 973px;
-	float: left;
-	height: 73px;
+	width: 900px;
+	height: 700px;
+	margin: 0 auto;
+	border: solid 5px #a10c10;
+	padding: 3px;
+	background: white;	
 }
 .prof {
 	float: left;
@@ -16,9 +27,15 @@ body {
 }
 #tweets p {
 	float: left;
-	width: 900px;
+	width: 650px;
 	height: 73px;
+	margin-top: 30px;
 }
+#tweets h1 {
+	color: #a10c10;
+	text-transform: uppercase;
+}
+
 .pic {
 	width: 300px;
 	float: left;
@@ -26,8 +43,11 @@ body {
 
 
 .slides_container {
-    width:570px;
-    height:270px;
+    width: 858px;
+    height: 658px;
+    border: solid 1px #a10c10;
+	padding: 20px;
+	font-family: Sansumi-Regular;
 }
 .slides_container div {
     width:570px;
