@@ -30,10 +30,10 @@ body {
 }
 #tweets p {
 	float: left;
-	width: 742px;
+	width: 685px;
 	height: 73px;
 	margin-top: 25px;
-	margin-left: 73px;
+	margin-left: 83px;
 	font-size: 26px;
 	font-weight: bold;
 	color: #555;
@@ -50,7 +50,7 @@ body {
 	float: left;
 	line-height: 73px;
 	padding: 0;
-	margin: 0;
+	margin: 0 0 0 10px;
 }
 .nick {
 	font-size: 16px;
@@ -63,7 +63,7 @@ body {
 .pic {
 	width: 400px;
 	float: left;
-	margin-left: 73px;
+	margin-left: 83px;
 }
 
 .slides_container {
