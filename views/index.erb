@@ -14,7 +14,7 @@
 		function printTweet(avatar, photo_url, from_user, text) {			
 			var div = $("<div/>").appendTo(".slides_container");
 			$("<img/>").addClass('avatar').attr("src", avatar).appendTo(div);			
-			$("<h1/>").html(from_user).appendTo(div);		
+			$("<span/>").addClass('name').html(from_user).appendTo(div);
 			var p = $("<p/>").html(text).appendTo(div);		
 			if (photo_url != '') {
 				$('<img/>').addClass('pic').attr("src", photo_url).appendTo(div);
@@ -56,7 +56,7 @@
 				var photo_url = getPhotoUrl(tweet);
 				printTweet(profile_img, photo_url, tweet.user.name, tweet.text);
 			});
-			$('#tweets').slides({play: 20000, pagination: false});
+			$('#tweets').slides({play: 5000, pagination: false, effect: "fade", generatePagination: false });
 		}
 
 		function fetchTweets() {
