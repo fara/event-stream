@@ -40,7 +40,7 @@
 		}
 
 		function parseSearch(data) {
-
+			$('.slides_container').empty();
 			$.each(data.results, function(i, tweet){
 				var profile_img = tweet.profile_image_url.replace('normal', 'bigger');	
 				var photo_url = getPhotoUrl(tweet);
@@ -50,7 +50,7 @@
 		}
 
 		function parseStream(data) {
-
+			$('.slides_container').empty();
 			$.each(data, function(i, tweet){
 				var profile_img = tweet.user.profile_image_url.replace('normal', 'bigger');
 				var photo_url = getPhotoUrl(tweet);
@@ -59,8 +59,7 @@
 			$('#tweets').slides({play: 5000, pagination: false, effect: "fade", generatePagination: false });
 		}
 
-		function fetchTweets() {
-			$('.slides_container').empty();
+		function fetchTweets() {			
 			if (USE_SEARCH_API) {
 				$.getJSON("http://search.twitter.com/search.json?callback=?",
 					{
