@@ -18,6 +18,7 @@ body {
 	margin-left: -450px;
 	top: 50%;
 	left: 50%;
+	position: absolute;
 
 	width: 900px;
 	height: 700px;	
