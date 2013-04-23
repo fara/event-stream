@@ -14,9 +14,13 @@ body {
 	color: #a10c10;
 }
 #tweets {
+	margin-top: -350px;
+	margin-left: -450px;
+	top: 50%;
+	left: 50%;
+
 	width: 900px;
-	height: 700px;
-	margin: 0 auto;
+	height: 700px;	
 	border: solid 5px #a10c10;
 	padding: 3px;
 	background: white;	

@@ -56,7 +56,7 @@
 				var photo_url = getPhotoUrl(tweet);
 				printTweet(profile_img, photo_url, tweet.user.name, tweet.text);
 			});
-			$('#tweets').slides({play: 5000, pagination: false, effect: "fade", generatePagination: false });
+			$('#tweets').slides({play: 6000, pagination: false, effect: "fade", generatePagination: false });
 		}
 
 		function fetchTweets() {			
@@ -73,7 +73,7 @@
 			}
 		}
 		fetchTweets();
-		setInterval(fetchTweets, 20 * 1000);
+		setInterval(fetchTweets, 60 * 1000);
 		</script>		
 		<div id="tweets">
 			<div class="slides_container"></div>
