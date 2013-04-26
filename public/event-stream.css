@@ -66,7 +66,8 @@ body {
 }
 
 .pic {
-	width: 400px;
+	height: 400px;
+	max-width: 800px;
 	float: left;
 	margin-left: 83px;
 }
