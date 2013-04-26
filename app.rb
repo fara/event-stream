@@ -1,5 +1,5 @@
 logger = Logger.new(STDOUT)
-logger.level = Logger::WARN
+logger.level = Logger::INFO
 
 #STREAMING_URL = 'https://stream.twitter.com/1/statuses/sample.json'
 STREAMING_URL = 'https://stream.twitter.com/1.1/statuses/filter.json'
@@ -46,11 +46,14 @@ EM.schedule do
     buffer += chunk
     while line = buffer.slice!(/.+\r?\n/)
       logger.info line
-      begin
-        tweet = JSON.parse(line)
-        DB['tweets'].insert(tweet) if tweet['text']
-      rescue JSON::ParserError => e
-        logger.error line
+      if not line.strip.empty?
+        logger.info line.inspect
+        begin
+          tweet = JSON.parse(line)
+          DB['tweets'].insert(tweet) if tweet['text']
+        rescue JSON::ParserError => e
+          logger.error e
+        end
       end
     end
   end
